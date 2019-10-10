@@ -124,7 +124,7 @@ def aggregate_braindrles_votes(braindrles_data, pass_labels, fail_labels,
     # count users contributions
     user_counts = braindrles_subset.groupby('username')\
         .apply(lambda x: x.shape[0])
-    username_keep = user_counts[user_counts >= user_counts.describe()['75%']]\
+    username_keep = user_counts[user_counts >= user_counts.describe()['50%']]\
         .index.values
     bdr = braindrles_subset[braindrles_subset.username.isin(username_keep)]
 
@@ -137,7 +137,7 @@ def aggregate_braindrles_votes(braindrles_data, pass_labels, fail_labels,
     for uname in bdr_pivot.columns:
         uname_img_counts.loc[uname, 'counts'] = (pd.isnull(bdr_pivot[uname]) == False).sum()
 
-    username_keep = uname_img_counts[uname_img_counts.counts >= uname_img_counts.describe().loc['75%']['counts']]
+    username_keep = uname_img_counts[uname_img_counts.counts >= uname_img_counts.describe().loc['50%']['counts']]
     username_keep = username_keep.index.values
 
     bdr = braindrles_subset[braindrles_subset.username.isin(username_keep)]
